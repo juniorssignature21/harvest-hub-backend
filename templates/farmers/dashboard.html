@@ -1,0 +1,363 @@
+
+{% extends "./partials/base.html" %} {% load static tailwind_tags %} {% block content %}
+   
+      <!-- Main content -->
+      <div class="flex-1 p-8">
+        <!-- Page header (Welcome) - outside the green card -->
+        <div class="mb-4">
+          <h1
+            id="welcomeMsg"
+            class="text-2xl lg:text-3xl font-bold text-green-900"
+          >
+            Welcome back, Wabweni Farmer!
+          </h1>
+          <p class="text-green-700 mt-1">Here's your farm overview</p>
+        </div>
+
+        <!-- Big green dashboard card -->
+        <section
+          class="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-2xl shadow-xl p-6 mb-6 relative overflow-hidden">
+          <!-- decorative leaf -->
+          <div class="absolute right-6 top-4 opacity-10 text-[7rem]">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+
+          <div class="flex flex-col gap-[50px] p-[20px_0]">
+            <!-- Balance column -->
+            <div class="col-span-1 md:col-span-1">
+              <p class="text-lg text-green-100/80 mt-2">Balance</p>
+              <div class="mt-2 text-4xl lg:text-5xl font-extrabold">
+                ₦<span id="balanceAmount">1,250,000.00</span>
+              </div>
+            </div>
+
+            <!-- three small stat boxes arranged like screenshot -->
+            <div class="col-span-2 grid grid-cols-3 gap-4 items-center">
+              <div class="bg-white/10 rounded-lg p-4">
+                <div class="text-sm text-green-100">Total Orders</div>
+                <div class="mt-2 font-bold text-xl">65</div>
+              </div>
+              <div class="bg-white/10 rounded-lg p-4">
+                <div class="text-sm text-green-100">Pending Deliveries</div>
+                <div class="mt-2 font-bold text-xl">4</div>
+              </div>
+              <div class="bg-white/10 rounded-lg p-4">
+                <div class="text-sm text-green-100">Total Amount Sold</div>
+                <div class="mt-2 font-bold text-xl">₦9,240</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Second section: three action cards (replacing crop health row) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <div
+            class="bg-gray-100 rounded-xl shadow shadow-lg p-5 hover:shadow-xl transition-transform duration-500 ease-in-out hover:scale-105 hover:cursor-pointer"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-black">Sell Product</h3>
+                <p class="text-sm text-green-900 mt-1">
+                  List a new product quickly and reach buyers across Abiagrow.
+                </p>
+              </div>
+              <div class="text-green-700 text-2xl">
+                <i class="fa-solid fa-bag-shopping"></i>
+              </div>
+            </div>
+            <div class="mt-4 flex gap-3">
+              <a href="{% url "store:add_product" %}"
+                ><button
+                  class="px-4 py-2 bg-green-700 text-white rounded-md shadow"
+                >
+                  List Product
+                </button></a
+              >
+            </div>
+          </div>
+
+          <div
+            class="bg-gray-100 rounded-xl shadow shadow-lg p-5 hover:shadow-xl transition-transform duration-500 ease-in-out hover:scale-105 hover:cursor-pointer"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-black">
+                  Withdraw Balance
+                </h3>
+                <p class="text-sm text-green-600 mt-1">
+                  Move your wallet funds to your bank account securely.
+                </p>
+              </div>
+              <div class="text-green-700 text-2xl">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a href="withdraw.html"
+                ><button
+                  id="withdrawBtn"
+                  class="px-4 py-2 bg-green-700 text-white rounded-md shadow"
+                >
+                  Withdraw
+                </button></a
+              >
+            </div>
+          </div>
+
+          <div
+            class="bg-gray-100 rounded-xl shadow shadow-lg p-5 hover:shadow-xl transition-transform duration-500 ease-in-out hover:scale-105 hover:cursor-pointer"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-black">
+                  Access Grants / Loans
+                </h3>
+                <p class="text-sm text-green-600 mt-1">
+                  Apply for agricultural grants or micro-loans available to
+                  farmers.
+                </p>
+              </div>
+              <div class="text-green-700 text-2xl">
+                <i class="fa-solid fa-hand-holding-dollar"></i>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a href="loanssub.html"
+                ><button
+                  class="px-4 py-2 bg-green-700 text-white rounded-md shadow"
+                >
+                  Explore Options
+                </button></a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Third section: two-column area -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <!-- Best Selling Crops -->
+          <div class="bg-gray-100 rounded-xl shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3
+                  class="text-xl font-semibold text-green-900 flex items-center gap-2"
+                >
+                  Best Selling Crops
+                  <span class="tooltip ml-2">
+                    <i class="fa-solid fa-circle-info text-green-500"></i>
+                    <span class="tooltip-text"
+                      >These are the top 3 best-selling products on
+                      Abiagrow.connect right now. Farmers can use this insight
+                      to decide what to plant or list.</span
+                    >
+                  </span>
+                </h3>
+                <p class="text-sm text-green-600 mt-1">
+                  Top performers on the marketplace
+                </p>
+              </div>
+              <button
+                class="text-sm p-[10px_20px] border border-green-700 rounded-lg text-green-700"
+              >
+                See more
+              </button>
+            </div>
+
+            <ul class="mt-5 space-y-4">
+              <li
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div class="flex items-center gap-4">
+                  <img
+                    class="w-12 h-12 rounded-md object-cover"
+                    src="https://images.unsplash.com/photo-1582515073490-3998131fe8bb?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=b1cc6e1f1b3bfc7c75f5d0a9b4e9b8f2"
+                    alt="maize"
+                  />
+                  <div>
+                    <div class="font-semibold text-green-900">
+                      Maize (Yellow Corn)
+                    </div>
+                    <div class="text-sm text-green-600">
+                      North Region — 87% sold
+                    </div>
+                  </div>
+                </div>
+                <div class="text-green-700 font-semibold">87%</div>
+              </li>
+
+              <li
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div class="flex items-center gap-4">
+                  <img
+                    class="w-12 h-12 rounded-md object-cover"
+                    src="https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=98bdaf8d1d7d6f0a1b0a2b3c4d5e6f7a"
+                    alt="soybeans"
+                  />
+                  <div>
+                    <div class="font-semibold text-green-900">Soybeans</div>
+                    <div class="text-sm text-green-600">
+                      South Region — 92% sold
+                    </div>
+                  </div>
+                </div>
+                <div class="text-green-700 font-semibold">92%</div>
+              </li>
+
+              <li
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div class="flex items-center gap-4">
+                  <img
+                    class="w-12 h-12 rounded-md object-cover"
+                    src="https://images.unsplash.com/photo-1506806732259-39c2d0268443?q=80&w=400&auto=format&fit=crop&ixlib=rb-4.0.3&s=0c7b2e9f6c8b87a1c2d3e4f5a6b7c8d9"
+                    alt="apples"
+                  />
+                  <div>
+                    <div class="font-semibold text-green-900">
+                      Apples — Honeycrisp
+                    </div>
+                    <div class="text-sm text-green-600">
+                      West Orchard — 78% sold
+                    </div>
+                  </div>
+                </div>
+                <div class="text-green-700 font-semibold">78%</div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Second card: Inventory Status (your choice) -->
+          <div class="bg-gray-100 rounded-xl shadow p-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-semibold text-green-900">
+                  Inventory Status
+                </h3>
+                <p class="text-sm text-green-600 mt-1">
+                  Current stock summary and low-stock alerts
+                </p>
+              </div>
+              <button
+                class="text-sm p-[10px_20px] border border-green-700 rounded-lg text-green-700"
+              >
+                Manage
+              </button>
+            </div>
+
+            <div class="mt-5 space-y-4">
+              <div
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div>
+                  <div class="font-semibold text-green-900">Maize</div>
+                  <div class="text-sm text-green-600">In stock: 1,200 bags</div>
+                </div>
+                <div class="text-sm text-yellow-700 font-semibold">
+                  Sufficient
+                </div>
+              </div>
+
+              <div
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div>
+                  <div class="font-semibold text-green-900">Soybeans</div>
+                  <div class="text-sm text-green-600">In stock: 240 sacks</div>
+                </div>
+                <div class="text-sm text-green-700 font-semibold">Low</div>
+              </div>
+
+              <div
+                class="flex items-center justify-between p-3 rounded-lg border border-green-200"
+              >
+                <div>
+                  <div class="font-semibold text-green-900">Apples</div>
+                  <div class="text-sm text-green-600">In stock: 520 crates</div>
+                </div>
+                <div class="text-sm text-green-700 font-semibold">Good</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transaction history (additional section) -->
+        <div class="bg-gray-100 rounded-xl shadow p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h3 class="text-xl font-semibold text-green-900">
+                Transaction History
+              </h3>
+              <p class="text-sm text-green-600 mt-1">
+                Recent wallet movements and sales
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                class="text-sm p-[10px_20px] border border-green-700 rounded-lg text-green-700"
+              >
+                Export
+              </button>
+              <button
+                class="bg-green-700 text-white text-sm p-[10px_20px] border border-green-700 rounded-lg text-green-700"
+              >
+                New Transaction
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-green-100">
+              <thead class="bg-green-50 text-green-800">
+                <tr>
+                  <th class="px-4 py-3 text-left text-sm font-medium">Date</th>
+                  <th class="px-4 py-3 text-left text-sm font-medium">
+                    Reference
+                  </th>
+                  <th class="px-4 py-3 text-left text-sm font-medium">Type</th>
+                  <th class="px-4 py-3 text-left text-sm font-medium">
+                    Amount
+                  </th>
+                  <th class="px-4 py-3 text-left text-sm font-medium">
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-green-100">
+                <tr class="hover:bg-green-50">
+                  <td class="px-4 py-3 text-sm">28/11/2025</td>
+                  <td class="px-4 py-3 text-sm">Sale #1234</td>
+                  <td class="px-4 py-3 text-sm">Sale</td>
+                  <td class="px-4 py-3 text-sm font-semibold">₦2,100</td>
+                  <td class="px-4 py-3 text-sm text-green-600 font-semibold">
+                    Completed
+                  </td>
+                </tr>
+                <tr class="hover:bg-green-50">
+                  <td class="px-4 py-3 text-sm">27/11/2025</td>
+                  <td class="px-4 py-3 text-sm">Withdraw #4321</td>
+                  <td class="px-4 py-3 text-sm">Withdraw</td>
+                  <td class="px-4 py-3 text-sm font-semibold">-₦7,150</td>
+                  <td class="px-4 py-3 text-sm text-yellow-700 font-semibold">
+                    Pending
+                  </td>
+                </tr>
+                <tr class="hover:bg-green-50">
+                  <td class="px-4 py-3 text-sm">26/11/2025</td>
+                  <td class="px-4 py-3 text-sm">Sale #1233</td>
+                  <td class="px-4 py-3 text-sm">Sale</td>
+                  <td class="px-4 py-3 text-sm font-semibold">₦2,100</td>
+                  <td class="px-4 py-3 text-sm text-red-600 font-semibold">
+                    Failed
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock content %}
+

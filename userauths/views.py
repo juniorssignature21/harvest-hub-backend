@@ -14,11 +14,6 @@ import uuid
 
 # Create your views here.
 
-@email_verification_required
-def index(request):
-    
-    return render(request, 'userauths/home.html')
-
 
 def register_user(request):
     form = RegistrationForm()
@@ -73,7 +68,7 @@ def login_view(request):
                 return redirect('userauths:resend-verification')
             
             login(request, user)
-            return redirect('userauths:home')  # Redirect to a success page.
+            return redirect('store:home')  # Redirect to a success page.
         else:
             messages.error(request, 'Invalid username or password.')
             

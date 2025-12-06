@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Abiagrow.connect — Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* small custom tweaks */
+      .card-blur {
+        backdrop-filter: blur(6px);
+      }
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 220px;
+        background-color: rgba(31, 41, 55, 0.95);
+        color: #fff;
+        text-align: left;
+        border-radius: 8px;
+        padding: 8px 10px;
+        position: absolute;
+        z-index: 50;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 13px;
+        line-height: 1.2;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0.15s;
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body class="bg-white font-sans antialiased text-gray-800">
+    <div class="min-h-screen flex">
+      <!-- Sidebar (kept same structure as image) -->
+      <aside
+        class="w-72 bg-gray-100 border-r border-green-100 p-6 flex flex-col justify-between"
+      >
+        <div>
+          <div class="flex items-center space-x-3 mb-6">
+            <div
+              class="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white text-lg font-bold"
+            >
+              A
+            </div>
+            <div>
+              <div class="font-bold text-lg text-green-800">AgroMind</div>
+              <div class="text-sm text-green-500">Abiagrow.connect</div>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-3 mb-5">
+            <img
+              alt="avatar"
+              class="w-12 h-12 rounded-full ring-2 ring-green-200"
+              src="https://i.pravatar.cc/100?img=12"
+            />
+            <div>
+              <div class="font-semibold text-green-900">Ghost Farmer</div>
+              <div class="text-sm text-green-500">Green Valley Farms</div>
+            </div>
+          </div>
+
+          <nav class="mt-4 space-y-2">
+            <a
+              class="flex items-center gap-3 px-3 py-4 rounded-lg bg-green-100 text-green-800 font-semibold hover:bg-green-500/60"
+              href="dashboard.html"
+            >
+              <i class="fa-solid fa-chart-line w-5 text-green-700"></i>
+              Dashboard
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-4 rounded-lg hover:bg-green-50 text-green-700 hover:bg-green-500/60"
+              href="viewproducts.html"
+            >
+              <i class="fa-solid fa-seedling w-5"></i>
+              View Products
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-4 rounded-lg hover:bg-green-50 text-green-700 hover:bg-green-500/60"
+              href="weather.html"
+            >
+              <i class="fa-solid fa-cloud-sun-rain w-5"></i>
+              Weather
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-4 rounded-lg hover:bg-green-50 text-green-700 hover:bg-green-500/60"
+              href="soilanalysis.html"
+            >
+              <i class="fa-solid fa-flask w-5"></i>
+              Soil Analysis
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-4 rounded-lg hover:bg-green-50 text-green-700 hover:bg-green-500/60"
+              href="settings.html"
+            >
+              <i class="fa-solid fa-gear w-5"></i>
+              Settings
+            </a>
+          </nav>
+
+          <div class="mt-6">
+            <button
+              class="w-full text-left px-3 py-4 rounded-lg bg-green-100 text-green-800 flex items-center gap-3 hover:bg-green-500/60"
+              id="analyzeCropBtn"
+            >
+              <i class="fa-solid fa-image"></i> Analyze Crop Image
+            </button>
+
+            <a href="ai-chat.html">
+              <button
+                class="mt-3 w-full text-left px-3 py-4 rounded-lg bg-blue-50 text-blue-700 flex items-center gap-3 hover:bg-blue-500/60"
+              >
+                <i class="fa-solid fa-comments"></i> AI Assistant Chat
+              </button>
+            </a>
+          </div>
+        </div>
+
+        <div class="text-sm text-green-500">
+          <div class="mt-6">
+            <a class="flex items-center gap-2" href="#"
+              ><i class="fa-regular fa-circle-question"></i> Help & Support</a
+            >
+          </div>
+          <div class="mt-4">
+            <a class="flex items-center gap-2" href="#"
+              ><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a
+            >
+          </div>
+          <div class="mt-6 text-xs text-green-400">© 2025 Abiagrow.connect</div>
+        </div>
+      </aside>
+
+      <!-- MAIN CONTENT -->
+      <main class="flex-1 p-10 overflow-y-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Soil Analysis</h1>
+
+        <!-- TOP TWO CARDS -->
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <!-- LEFT: RADAR GRAPH -->
+          <div class="bg-white shadow rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-4">Soil Health Analysis</h2>
+            <img
+              src="https://i.imgur.com/kkw9S4J.png"
+              alt="Radar Graph Placeholder"
+              class="w-full opacity-90 rounded-lg"
+            />
+          </div>
+
+          <!-- RIGHT: NUTRIENT LEVELS -->
+          <div class="bg-white shadow rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-4">Soil Nutrient Levels</h2>
+
+            <!-- Nitrogen -->
+            <div class="mb-4">
+              <div class="flex justify-between">
+                <span>Nitrogen (N)</span><span>45 ppm</span>
+              </div>
+              <div class="w-full h-2 bg-yellow-300 rounded mt-1"></div>
+              <p class="text-sm text-gray-500">Optimal: 50 ppm</p>
+            </div>
+
+            <div class="mb-4">
+              <div class="flex justify-between">
+                <span>Phosphorus (P)</span><span>35 ppm</span>
+              </div>
+              <div class="w-full h-2 bg-green-400 rounded mt-1"></div>
+              <p class="text-sm text-gray-500">Optimal: 30 ppm</p>
+            </div>
+
+            <div class="mb-4">
+              <div class="flex justify-between">
+                <span>Potassium (K)</span><span>180 ppm</span>
+              </div>
+              <div class="w-full h-2 bg-blue-400 rounded mt-1"></div>
+              <p class="text-sm text-gray-500">Optimal: 150 ppm</p>
+            </div>
+
+            <div class="mb-4">
+              <div class="flex justify-between">
+                <span>pH</span><span>6.5 pH</span>
+              </div>
+              <div class="w-full h-2 bg-green-400 rounded mt-1"></div>
+              <p class="text-sm text-gray-500">Optimal: 6.5 pH</p>
+            </div>
+
+            <div>
+              <div class="flex justify-between">
+                <span>Organic Matter</span><span>3.2%</span>
+              </div>
+              <div class="w-full h-2 bg-yellow-300 rounded mt-1"></div>
+              <p class="text-sm text-gray-500">Optimal: 4%</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FIELD SOIL HEALTH SECTION -->
+        <div class="bg-white shadow rounded-xl p-6 mt-8">
+          <h2 class="text-xl font-semibold mb-4">Field Soil Health</h2>
+
+          <!-- North Field -->
+          <div class="mb-6">
+            <div class="flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-green-500"></span>
+              <h3 class="font-semibold text-gray-800">North Field</h3>
+            </div>
+            <p class="text-gray-500 text-sm ml-5">Soil Health Score</p>
+            <p class="text-gray-400 text-xs ml-5">Last tested: Mar 31, 2025</p>
+          </div>
+
+          <!-- South Field -->
+          <div class="mb-6">
+            <div class="flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-yellow-500"></span>
+              <h3 class="font-semibold text-gray-800">South Field</h3>
+            </div>
+            <p class="text-gray-500 text-sm ml-5">Soil Health Score</p>
+            <p class="text-gray-400 text-xs ml-5">Last tested: Mar 20, 2025</p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- AI Crop Analyzer Modal -->
+    <div
+      id="cropModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+    >
+      <div class="bg-white rounded-xl shadow-lg w-[90%] max-w-lg p-6 relative">
+        <!-- Close Button -->
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-gray-500 hover:text-gray-900"
+        >
+          ✕
+        </button>
+
+        <!-- Upload State -->
+        <div
+          id="uploadState"
+          class="flex flex-col items-center justify-center h-64"
+        >
+          <div
+            class="w-20 h-20 border-2 border-dashed border-gray-400 rounded-full flex items-center justify-center cursor-pointer hover:border-green-500"
+            onclick="openFileSelector()"
+          >
+            <span class="text-4xl text-gray-400">+</span>
+          </div>
+          <p class="mt-4 text-gray-700 text-center">
+            Upload a crop image to analyze
+          </p>
+          <input
+            type="file"
+            id="cropImageInput"
+            accept="image/*"
+            capture="environment"
+            class="hidden"
+            onchange="handleImageUpload(event)"
+          />
+        </div>
+
+        <!-- Analysis State -->
+        <div id="analysisState" class="hidden flex flex-col">
+          <div class="flex items-start space-x-4">
+            <img
+              id="cropPreview"
+              src=""
+              alt="Crop Image"
+              class="w-24 h-24 object-cover rounded-lg border"
+            />
+            <div class="flex-1">
+              <h3 id="diseaseName" class="text-lg font-bold text-red-600">
+                Disease Name
+              </h3>
+              <p id="diseaseCure" class="text-gray-700 mt-2">
+                Suggested cure or steps...
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <input
+              type="text"
+              id="cropChatInput"
+              placeholder="Ask more about this disease..."
+              class="w-full border rounded p-2"
+            />
+          </div>
+
+          <button
+            onclick="resetCropAnalysis()"
+            class="mt-4 bg-green-600 text-white rounded px-4 py-2 hover:bg-green-700"
+          >
+            Analyze Another Crop
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const analyzeBtn = document.getElementById("analyzeCropBtn");
+      const modal = document.getElementById("cropModal");
+      const uploadState = document.getElementById("uploadState");
+      const analysisState = document.getElementById("analysisState");
+      const cropInput = document.getElementById("cropImageInput");
+      const cropPreview = document.getElementById("cropPreview");
+      const diseaseName = document.getElementById("diseaseName");
+      const diseaseCure = document.getElementById("diseaseCure");
+
+      analyzeBtn.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+      });
+
+      function closeModal() {
+        modal.classList.add("hidden");
+        resetCropAnalysis();
+      }
+
+      function openFileSelector() {
+        cropInput.click();
+      }
+
+      function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        cropPreview.src = URL.createObjectURL(file);
+
+        uploadState.classList.add("hidden");
+        analysisState.classList.remove("hidden");
+
+        diseaseName.textContent = "Identifying...";
+        diseaseCure.textContent =
+          "Please wait while the AI analyzes the crop image...";
+
+        // Simulate loading (you will replace with actual API call)
+        setTimeout(() => {
+          diseaseName.textContent = "Sample Disease";
+          diseaseCure.textContent =
+            "Here is the suggested cure and treatment steps...";
+        }, 1200);
+      }
+
+      function resetCropAnalysis() {
+        uploadState.classList.remove("hidden");
+        analysisState.classList.add("hidden");
+        cropPreview.src = "";
+        diseaseName.textContent = "";
+        diseaseCure.textContent = "";
+        cropInput.value = "";
+      }
+    </script>
+  </body>
+</html>

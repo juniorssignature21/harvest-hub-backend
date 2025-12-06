@@ -1,0 +1,139 @@
+{% extends "./partials/base.html" %} {% load static tailwind_tags %} {% block content %}
+    <style>
+      /* small custom tweaks */
+      .card-blur {
+        backdrop-filter: blur(6px);
+      }
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 220px;
+        background-color: rgba(31, 41, 55, 0.95);
+        color: #fff;
+        text-align: left;
+        border-radius: 8px;
+        padding: 8px 10px;
+        position: absolute;
+        z-index: 50;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 13px;
+        line-height: 1.2;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0.15s;
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+
+
+ 
+    
+    <h2 class="text-3xl font-bold mb-8">Add New Product</h2>
+
+    <form class="space-y-10 max-w-4xl" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <!-- PRODUCT NAME -->
+      <div>
+        <label class="block font-medium mb-2">Product Name</label>
+        {{ form.name }}
+      </div>
+
+      <!-- CATEGORY -->
+      <div>
+        <label class="block font-medium mb-2">Product Category</label>
+        {{ form.category }}
+      </div>
+
+      <!-- IMAGES -->
+      <div>
+        <label class="block font-medium mb-2">Product Images</label>
+        <input type="file" name="image" multiple class="w-full p-3 border rounded-lg" />
+        <p class="text-sm text-gray-500 mt-1">Upload clear images of your product (up to 5).</p>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div>
+        <label class="block font-medium mb-2">Product Description</label>
+        {{ form.description }}
+      </div>
+
+      <!-- PRICE & UNIT -->
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label class="block font-medium mb-2">Price</label>
+          {{ form.price }}
+        </div>
+
+        <div>
+          <label class="block font-medium mb-2">Unit Type</label>
+          {{ form.unit_type }}
+        </div>
+      </div>
+
+      <!-- AVAILABILITY -->
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <label class="block font-medium mb-2">Availability Status</label>
+          {{ form.availability_status }}
+        </div>
+
+        <div>
+          <label class="block font-medium mb-2">Amount Available</label>
+          {{ form.stock_quantity }}
+        </div>
+      </div>
+
+      <!-- HARVEST DATE -->
+      <div>
+        <label class="block font-medium mb-2">Harvest Date</label>
+        {{ form.harvest_date }}
+      </div>
+
+      <!-- EXPIRY DATE -->
+      <div>
+        <label class="block font-medium mb-2">Expiry Date</label>
+        {{ form.expiry_date }}
+      </div>
+
+      <!-- LOCATION -->
+      <div>
+        <label class="block font-medium mb-2">Farm Location</label>
+        {{ form.farm_location }}
+      </div>
+
+      <!-- ORGANIC TAG -->
+      <div class="flex items-center gap-3">
+        {{ form.organic_certified }}
+        <label class="font-medium">This product is organic / pesticide-free</label>
+      </div>
+
+      <!-- STORAGE DETAILS -->
+      <div>
+        <label class="block font-medium mb-2">Storage</label>
+        {{ form.storage_instructions }}
+      </div>
+
+     
+      <div>
+        <label class="block font-medium mb-2">Handling Notes</label>
+        {{ form.usage_instructions }}
+      </div>
+
+      <!-- SUBMIT -->
+      <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700">
+        Add Product
+      </button>
+
+    </form>
+
+
+{% endblock content %}
+

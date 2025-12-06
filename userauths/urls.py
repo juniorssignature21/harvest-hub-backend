@@ -11,5 +11,4 @@ urlpatterns = [
     path('verify/<uuid:token>/', views.verify_email_view, name='verify-email'),
     path('resend-verification/', views.resend_verification_view, name='resend-verification'),
     # path('profile/', views.profile_view, name='profile'),
-    path('', views.index, name="home")
 ]

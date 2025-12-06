@@ -27,14 +27,14 @@
     <nav class="bg-primary text-white shadow-lg">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold">
-                <a href="{% url 'userauths:home' %}">Abiagrow.connect</a>
+                <a href="{% url 'store:home' %}">Abiagrow.connect</a>
             </div>
             <div class="flex gap-6 items-center">
                 {% if user.is_authenticated %}
                     <span class="text-sm">Welcome, {{ user.username }}!</span>
                     <a href="{% url 'userauths:logout' %}" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded">Logout</a>
                 {% else %}
-                    <a href="{% url 'userauths:login' %}" class="bg-white text-primary px-4 py-2 rounded hover:bg-gray-100">Login</a>
+                    <a href="{% url 'userauths:login' %}" class="bg-white text-black px-4 py-2 rounded hover:bg-gray-100">Login</a>
                     <a href="{% url 'userauths:register' %}" class="bg-accent hover:bg-accent-dark px-4 py-2 rounded">Register</a>
                 {% endif %}
             </div>

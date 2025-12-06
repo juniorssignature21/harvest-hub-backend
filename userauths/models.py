@@ -6,6 +6,14 @@ import random
 import uuid
 
 # Create your models here.
+USER_TYPE = [
+    ("farmer", "Farmer"),
+    ("Buyer", "Buyer"),
+    ("service_provider", "Service Provider"),
+    ("admin", "Admin"),
+]
+
+
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
@@ -43,6 +51,15 @@ class Profile(models.Model):
     address = models.CharField(max_length=30, blank=True, null=True)
     state_of_residence = models.CharField(max_length=30, blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
+    user_type = models.CharField(max_length=20, choices=USER_TYPE, blank=True, null=True, default="buyer")
+    slug = models.SlugField(unique=True, blank=True, null=True)
     
     def __str__(self):
         return f"{self.user.username}'s profile"
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = f"{self.user.username}-profile"
+            if Profile.objects.filter(slug=self.slug).exists():
+                self.slug += '-' + str(random.randint(1000, 9999))
+        super().save(*args, **kwargs)

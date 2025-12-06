@@ -1,0 +1,146 @@
+{% extends "./partials/base.html" %} {% load static tailwind_tags %} {% block content %}
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+/>
+<style>
+  .card-blur {
+    backdrop-filter: blur(6px);
+  }
+  .tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 220px;
+    background: rgba(31, 41, 55, 0.95);
+    color: #fff;
+    text-align: left;
+    border-radius: 8px;
+    padding: 8px 10px;
+    position: absolute;
+    z-index: 50;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    line-height: 1.2;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<main class="flex-1 p-8">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-semibold">
+          Weather Forecast — <span class="text-green-700">{{ city }}</span>
+        </h1>
+        <p class="text-sm text-gray-500">Data provided by Open‑Meteo</p>
+      </div>
+      <form method="get" class="flex items-center">
+        <input
+          name="city"
+          placeholder="Search city"
+          class="border rounded-l px-3 py-2"
+          value="{{ city }}"
+        />
+        <button class="bg-green-600 text-white px-4 py-2 rounded-r">
+          Lookup
+        </button>
+      </form>
+    </div>
+
+    <!-- Forecast cards -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="font-semibold">Today</p>
+        <p class="text-3xl font-bold mt-2">{{ today.temp_f }}°F</p>
+        <p class="text-sm mt-2">
+          Humidity: {{ today.humidity|default:'N/A' }}%
+        </p>
+        <p class="text-sm">Wind: {{ today.wind }} mph</p>
+        <p class="mt-1 text-sm text-gray-600">
+          {{ today.description|default:'-' }}
+        </p>
+      </div>
+
+      {% for f in forecasts %}
+      <div class="bg-white p-4 rounded-xl shadow">
+        <p class="font-semibold">{{ f.date }}</p>
+        <p class="text-2xl font-bold mt-2">{{ f.temp_f }}°F</p>
+        <p class="text-sm mt-2">Humidity: {{ f.humidity|default:'N/A' }}%</p>
+        <p class="text-sm">Wind: {{ f.wind|default:'-' }} mph</p>
+        <p class="mt-1 text-sm text-gray-600">{{ f.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Rainfall chart -->
+    <div class="bg-white rounded-xl shadow p-6 mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-xl font-semibold">Rainfall (mm)</h2>
+        <p class="text-sm text-gray-500">Recent days</p>
+      </div>
+      <div class="w-full">
+        <canvas id="rainfallChart" height="120"></canvas>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h2 class="text-xl font-semibold mb-3">Weather Impact Analysis</h2>
+        <p class="text-blue-600">{{ impact.rainfall }}</p>
+        <p class="text-gray-700 mt-2">{{ impact.humidity }}</p>
+      </div>
+
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h2 class="text-xl font-semibold mb-3">Irrigation Planning</h2>
+        <div class="flex items-center justify-between">
+          <p class="font-semibold">{{ irrigation.field }}</p>
+          <span class="px-3 py-1 rounded-lg bg-green-100 text-green-700 text-sm"
+            >{{ irrigation.status }}</span
+          >
+        </div>
+        <p class="text-gray-600 text-sm mt-2">
+          Soil moisture: {{ irrigation.soil_moisture }}
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+  // Build labels and data from template context
+  const rainfall = {{ rainfall|default:'[]'|safe }};
+  const labels = [{% for f in forecasts %}'{{ f.date }}'{% if not forloop.last %}, {% endif %}{% endfor %}];
+
+  const ctx = document.getElementById('rainfallChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels.length ? labels : rainfall.map((_,i)=> 'Day ' + (i+1)),
+      datasets: [{
+        label: 'Rainfall (mm)',
+        data: rainfall,
+        backgroundColor: 'rgba(59,130,246,0.6)',
+        borderColor: 'rgba(59,130,246,1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+</script>
+{% endblock content %}

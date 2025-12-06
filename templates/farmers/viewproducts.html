@@ -1,0 +1,73 @@
+{% extends "./partials/base.html" %} {% load static tailwind_tags %} {% block content %}
+    <style>
+      /* small custom tweaks */
+      .card-blur {
+        backdrop-filter: blur(6px);
+      }
+      /* Tooltip */
+      .tooltip {
+        position: relative;
+        display: inline-block;
+      }
+      .tooltip .tooltip-text {
+        visibility: hidden;
+        width: 220px;
+        background-color: rgba(31, 41, 55, 0.95);
+        color: #fff;
+        text-align: left;
+        border-radius: 8px;
+        padding: 8px 10px;
+        position: absolute;
+        z-index: 50;
+        bottom: 125%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 13px;
+        line-height: 1.2;
+        opacity: 0;
+        transition: opacity 0.15s ease, visibility 0.15s;
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+    </style>
+
+    <!-- PAGE HEADER -->
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-2xl font-semibold">Your Products</h1>
+      
+      <!-- Add New Product Button -->
+
+      <a href="{% url "store:add_product" %}" class="px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl shadow"><button>
+        + Add New Product
+      </button></a>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {% for product in products %}
+      <!-- Product Card -->
+      <div class="bg-white flex flex-col shadow shadow-lg p-4 rounded-xl">
+        <img src="{{ product.primary_image.image.url }}" class="w-full h-40 object-cover rounded-lg" />
+        <p class="font-semibold text-lg mt-3">
+          {{ product.name|capfirst }}
+        </p>
+        <p class="text-sm text-gray-600 mt-1">Price: ₦{{ product.price }} per {{ product.unit_type }}</p>
+        <p class="text-sm text-gray-600">Stock: {{ product.stock_quantity }} {{ product.unit_type }}</p>
+        <p class="text-xs text-green-600 mt-2">
+          Fresh Harvest
+        </p>
+
+        <div class="flex items-center mt-4 self-center w-[95%]">
+          <a href="{% url "store:product_detail" product.slug %}" class="px-3 py-1 bg-green-500/60 text-green-700 rounded-md text-sm w-[95%] hover:bg-green-200 text-center" ><button>View</button></a>
+        </div>
+      </div>
+      {% endfor %}
+      
+      
+
+    </div>
+
+{% endblock content %}
+
