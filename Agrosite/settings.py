@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pi-36(furk9ofmcqcdf-j(9)y5g77xb221yz$u!nwelzemchdb'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     
     'tailwind',
     'theme',
-    'django_browser_reload',
+    # 'django_browser_reload',
     
 ]
 
@@ -58,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_browser_reload.middleware.BrowserReloadMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",   
 ]
 
 ROOT_URLCONF = 'Agrosite.urls'
@@ -338,3 +341,11 @@ DEFAULT_FROM_EMAIL = 'Abiagrow.connect <noreply@abiagrow.com>'
 TAILWIND_APP_NAME = 'theme'
 
 NPM_BIN_PATH="/usr/bin/npm"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STORAGES = {
+#     # ...
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+#     },
+# }

@@ -10,6 +10,11 @@ from service_providers.models import Service_Provider
 
 
 # Create your views here.
+def custom_404_view(request, exception):
+    return render(request, 'store/404.html', status=404)
+
+def custom_500_view(request):
+    return render(request, 'store/500.html', status=500)
 
 # @email_verification_required
 def home(request):

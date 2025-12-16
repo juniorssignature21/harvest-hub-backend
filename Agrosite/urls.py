@@ -19,6 +19,9 @@ from django.urls import path, include
 from Agrosite import settings
 from django.conf.urls.static import static
 
+handler404 = 'store.views.custom_404_view'
+handler500 = 'store.views.custom_500_view'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
